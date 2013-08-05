@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/integration"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/integration
+http://www.springframework.org/schema/integration/spring-integration.xsd">
+	<channel id="input" />
+	<channel id="validated" />
+	<channel id="confirmed">
+		<queue />
+	</channel>
+	<channel id="rejected">
+		<queue />
+	</channel>
+	<gateway id="subscriptionDJ"
+		service-interface="org.siia.tilumusic.integration.subscription.DJSubscriptionGateway"
+		default-request-channel="input" />
+	<filter id="djSubscriptionFilter" input-channel="input"
+		ref="djSubscriptionsFilterBean" method="accept" discard-channel="rejected"
+		output-channel="validated" />
+	<beans:bean id="djSubscriptionsFilterBean"
+		class="org.siia.tilumusic.integration.subscription.DJSubscriptionRequestFilter">
+		<beans:property name="pattern" value="GOLD[A-Z0-9]{6}+" />
+	</beans:bean>
+	<service-activator id="goldDJSubscriptionProcessor"
+		input-channel="validated" ref="djSubscriptionService" method="subscribe"
+		output-channel="confirmed" />
+	<beans:bean id="djSubscriptionService"
+		class="org.siia.tilumusic.domain.subscription.StubDjSubscriptionService" />
+</beans:beans>
