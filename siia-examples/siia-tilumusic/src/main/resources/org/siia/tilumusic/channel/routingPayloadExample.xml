@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xsi:schemaLocation="http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-2.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+<int:channel id="payments"/>
+
+<!--  payload detects the kind of payload coming and authomatically sends it -->
+<int:payload-type-router input-channel="payments">
+	<int:mapping type="org.siia.tilumusic.domain.payment.CreditCardPayment"
+		channel="credit-card-payments" />
+	<int:mapping type="org.siia.tilumusic.domain.payment.Invoice"
+		channel="invoices" />
+	<int:mapping type="org.siia.tilumusic.domain.payment.PaypalPayment"
+		channel="paypal-payments" />
+			<int:mapping type="org.siia.tilumusic.domain.payment.DirectDebitPayment"
+		channel="direct-debit-payments" />
+</int:payload-type-router>
+<int:channel id="invoices">
+	<int:queue/>
+</int:channel>
+<int:channel id="credit-card-payments">
+	<int:queue/>
+</int:channel>
+<int:channel id="paypal-payments">
+	<int:queue/>
+</int:channel>
+<int:channel id="direct-debit-payments">
+	<int:queue/>
+</int:channel>
+<!-- 
+Basic simple router where we delegate the routing mapping
+<int:router method="routePaymentSettlement"
+input-channel="payments">
+<bean	class="org.siia.tilumusic.integration.routing.PaymentSettlementRouter"/>
+</int:router>
+ -->
+</beans>

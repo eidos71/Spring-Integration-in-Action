@@ -15,8 +15,6 @@ import org.springframework.integration.support.MessageBuilder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import siia.booking.domain.cancellation.CancellationRequest;
-
 
 @ContextConfiguration("classpath:org/siia/tilumusic/goldsubscribers/djHookingevent.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
