@@ -2,16 +2,21 @@ package org.siia.tilumusic.domain.clubs;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import javax.xml.bind.annotation.XmlAccessType;
 
 import org.joda.time.DateTime;
 import org.siia.tilumusic.domain.DJStream;
 import org.siia.tilumusic.domain.bindings.JodaDateTimeAdapter;
+import org.siia.tilumusic.domain.bindings.ListDJStreamAdapter;
 
-@XmlRootElement
-public class ClubCalendar {
+@XmlRootElement(name="clubCalendar")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class ClubCalendarCommand {
 	@XmlElement
 	@XmlJavaTypeAdapter(JodaDateTimeAdapter.class)
 	private DateTime startingCalendarSchedule;
@@ -21,6 +26,9 @@ public class ClubCalendar {
 	
 	@XmlElement
 	private DJStream djStream;
+	  	@XmlElementWrapper(name="list-djstream")
+	    @XmlElement(name="djStream")
+	private List<DJStream> listdjStream;
 	
 	
 	
@@ -36,17 +44,25 @@ public class ClubCalendar {
 		System.out.println("djStream->"+ djStream.getDjEventNumber() );
 		return djStream;
 	}
+	public List<DJStream> getListDJStream(){
+		return listdjStream;
+	}
 
-	private ClubCalendar(){
+	private ClubCalendarCommand(){
 		
 	}
-	public ClubCalendar  (DateTime startingCalendarSchedule, DateTime endingCalendarSchedule,
+	public ClubCalendarCommand  (DateTime startingCalendarSchedule, DateTime endingCalendarSchedule,
 			DJStream djStream ){
 		this.startingCalendarSchedule=startingCalendarSchedule;
 		this.endingCalendarSchedule=endingCalendarSchedule;
 		this.djStream=djStream;
 	}
-	
+	public ClubCalendarCommand  (DateTime startingCalendarSchedule, DateTime endingCalendarSchedule,
+			List<DJStream> djStream ){
+		this.startingCalendarSchedule=startingCalendarSchedule;
+		this.endingCalendarSchedule=endingCalendarSchedule;
+		this.listdjStream=djStream;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -71,7 +87,7 @@ public class ClubCalendar {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ClubCalendar other = (ClubCalendar) obj;
+		ClubCalendarCommand other = (ClubCalendarCommand) obj;
 		if (djStream == null) {
 			if (other.djStream != null)
 				return false;
@@ -92,9 +108,9 @@ public class ClubCalendar {
 	}
 	@Override
 	public String toString() {
-		return "ClubCalendar [startingCalendarSchedule="
+		return "ClubCalendarCommand [startingCalendarSchedule="
 				+ startingCalendarSchedule + ", endingCalendarSchedule="
-				+ endingCalendarSchedule + ", djStream=" + djStream.getDjEventNumber() + "]";
+				+ endingCalendarSchedule + "]";
 	}
 	
 	
