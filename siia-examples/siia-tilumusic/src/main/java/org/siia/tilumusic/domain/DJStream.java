@@ -2,6 +2,8 @@ package org.siia.tilumusic.domain;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlAttribute;
+
 import org.springframework.util.Assert;
 
 public class DJStream {
@@ -50,6 +52,7 @@ public class DJStream {
 			return false;
 		return true;
 	}
+    @XmlAttribute
 	private String djEventNumber;
 	private Date departure;
 	private String djCode;
@@ -61,6 +64,10 @@ public class DJStream {
 	 */
 	public DJStream(String djEventNumber) {
 		Assert.hasText(djEventNumber);
+		this.djEventNumber=djEventNumber;
+	}
+	private DJStream(){
+		
 	}
 	/**
 	 * 
