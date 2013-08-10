@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import org.joda.time.DateTime;
 import org.siia.tilumusic.domain.DJStream;
 import org.siia.tilumusic.domain.bindings.JodaDateTimeAdapter;
-import org.siia.tilumusic.domain.bindings.ListDJStreamAdapter;
+
 
 @XmlRootElement(name="clubCalendar")
 @XmlAccessorType(XmlAccessType.FIELD)

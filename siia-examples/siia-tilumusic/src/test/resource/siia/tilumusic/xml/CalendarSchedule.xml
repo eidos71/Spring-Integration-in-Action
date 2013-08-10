@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<clubCalendar>
+	<startingCalendarSchedule>1970-01-02T00:00:00Z
+	</startingCalendarSchedule>
+	<endingCalendarSchedule>1970-01-03T00:00:00Z</endingCalendarSchedule>
+	<list-djstream>
+		<djStream djEventNumber="HazardStream" facebookpost="www.facebook.com?uid=33131"
+			streamUrl="www.hazfakestreamurl:8080.com" twitterAccount="@hazard" />
+		<djStream djEventNumber="TishaStream" facebookpost="www.facebook.com?uid=1111"
+			streamUrl="www.tishafakestreamurl:8080.com" twitterAccount="@tisha" />
+		<djStream djEventNumber="AlisaStream" facebookpost="www.facebook.com?uid=5555"
+			streamUrl="www.alisafakestreamurl:8080.com" twitterAccount="@alisa" />
+	</list-djstream>
+</clubCalendar>
+<cs:clubCalendar xmlns:cs="http://www.example.org/siia/club-schedule">
+	<cs:calendarStream>
+		<djStream djEventNumber="HazardStream" />
+		<date>1970-01-02T00:00:00Z</date>
+		<streamURL streamUrl="www.hazfakestreamurl:8080.com" />
+	</cs:calendarStream>
+	<cs:faceBookCalendar>
+		<djStream djEventNumber="HazardStream" />
+		<date>1970-01-02T00:00:00Z</date>
+		<streamURL facebookpost="www.facebook.com?uid=33131" />
+	</cs:faceBookCalendar>
+	<cs:TwitterCalendar>
+		<djStream djEventNumber="HazardStream" />
+		<date>1970-01-02T00:00:00Z</date>
+		<streamURL twitterAccount="@hazard" />
+	</cs:TwitterCalendar>
+</cs:clubCalendar>

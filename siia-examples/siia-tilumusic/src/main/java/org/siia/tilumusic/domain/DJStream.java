@@ -2,10 +2,14 @@ package org.siia.tilumusic.domain;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.springframework.util.Assert;
-
+@XmlRootElement()
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DJStream {
 
 	@Override
@@ -54,10 +58,44 @@ public class DJStream {
 	}
     @XmlAttribute
 	private String djEventNumber;
-	private Date departure;
-	private String djCode;
-	private String destination;
 	
+    private Date departure;
+	@XmlAttribute
+    private String djCode;
+	
+    private String destination;
+	
+    @XmlAttribute
+    private String streamUrl;
+    
+    @XmlAttribute 
+    private String facebookpost;
+    
+    @XmlAttribute
+    private String twitterAccount;
+    
+    
+	
+	public String getStreamUrl() {
+		return streamUrl;
+	}
+	public String getFacebookpost() {
+		return facebookpost;
+	}
+	public String getTwitterAccount() {
+		return twitterAccount;
+	}
+	
+	public DJStream (String djEventNumber, String facebookpost, String twitterAccount, String streamUrl){
+		Assert.hasText(djEventNumber);
+		Assert.hasText(facebookpost);
+		Assert.hasText(twitterAccount);
+		Assert.hasText(streamUrl);
+		this.djEventNumber=djEventNumber;
+		this.facebookpost=facebookpost;
+		this.twitterAccount= twitterAccount;
+		this.streamUrl=streamUrl;
+	}
 	/**
 	 * 
 	 * @param djEventNumber
@@ -66,9 +104,13 @@ public class DJStream {
 		Assert.hasText(djEventNumber);
 		this.djEventNumber=djEventNumber;
 	}
+	/** needed to parse it by Jaxb
+	 * 
+	 */
 	private DJStream(){
 		
 	}
+	
 	/**
 	 * 
 	 * @param date
