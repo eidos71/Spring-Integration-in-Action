@@ -8,8 +8,7 @@
 	OF ANY KIND, either express or implied. * See the License for the specific 
 	language governing permissions and * limitations under the License. -->
 <beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://www.springframework.org/schema/integration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/integration"
 	xmlns:si-xml="http://www.springframework.org/schema/integration/xml"
 	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/integration/xml http://www.springframework.org/schema/integration/xml/spring-integration-xml.xsd
@@ -29,36 +28,44 @@
 		input-channel="javaClubCalendarCommands" output-channel="xmlClubQuotes"
 		marshaller="clubMarshaller" result-transformer="resultToDocumentTransformer" />
 
-    <beans:bean id="resultToDocumentTransformer"
-          class="org.springframework.integration.xml.transformer.ResultToDocumentTransformer"/>
+	<beans:bean id="resultToDocumentTransformer"
+		class="org.springframework.integration.xml.transformer.ResultToDocumentTransformer" />
 
 	<channel id="xmlClubQuotes" />
-  	 <si-xml:xslt-transformer
-        input-channel="xmlClubQuotes"
-        output-channel="xslTransformedClubQuote"
-        xsl-resource="classpath:/xsl/enrichCriteriaWithClubSchedule.xsl"/>
+	<si-xml:xslt-transformer input-channel="xmlClubQuotes"
+		output-channel="xslTransformedClubQuote" xsl-resource="classpath:/xsl/enrichCriteriaWithClubSchedule.xsl" />
 
-    <channel id="xslTransformedClubQuote"/>
-    
-     <si-xml:xpath-splitter create-documents="true" input-channel="xslTransformedClubQuote" output-channel="splittingClubNodes">
-        <si-xml:xpath-expression  id ="simpleXpath" expression="/*/cs:clubCalendar/*" namespace-map="namespaceMap" />
-    </si-xml:xpath-splitter>
-    <util:map id="namespaceMap">
-  		<beans:entry key="cs" value="http://www.example.org/siia/club-schedule" />
+	<channel id="xslTransformedClubQuote" />
+
+	<si-xml:xpath-splitter create-documents="true"
+		input-channel="xslTransformedClubQuote" output-channel="splittingClubNodes">
+		<si-xml:xpath-expression id="simpleXpath"
+			expression="/*/cs:clubCalendar/*" namespace-map="namespaceMap" />
+	</si-xml:xpath-splitter>
+	<util:map id="namespaceMap">
+		<beans:entry key="cs"
+			value="http://www.example.org/siia/club-schedule" />
 	</util:map>
-	<channel id="splittingClubNodes"/>
-	   
+	<channel id="splittingClubNodes" />
+
 	<si-xml:xpath-router id="clubRequestRouter"
 		input-channel="splittingClubNodes" evaluate-as-string="true">
-		<si-xml:xpath-expression expression="local-name(//*)"  namespace-map="namespaceMap" />
+		<si-xml:xpath-expression expression="local-name(//*)"
+			namespace-map="namespaceMap" />
 		<si-xml:mapping value="calendarStream" channel="streamClubCalendar" />
 		<si-xml:mapping value="faceBookCalendar" channel="facebookClubCalendar" />
 		<si-xml:mapping value="TwitterCalendar" channel="twitterClubCalendar" />
 	</si-xml:xpath-router>
-	
-    
-	<channel id="facebookClubCalendar"><queue/></channel>
-	<channel id="twitterClubCalendar"><queue/></channel>
-	<channel id="streamClubCalendar"><queue/></channel>
+
+
+	<channel id="facebookClubCalendar">
+		<queue />
+	</channel>
+	<channel id="twitterClubCalendar">
+		<queue />
+	</channel>
+	<channel id="streamClubCalendar">
+		<queue />
+	</channel>
 </beans:beans>
 

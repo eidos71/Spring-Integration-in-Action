@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:int-jms="http://www.springframework.org/schema/integration/jms"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xsi:schemaLocation="http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-2.1.xsd
+		http://www.springframework.org/schema/integration/jms http://www.springframework.org/schema/integration/jms/spring-integration-jms-2.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+	
+<int:channel id="objectMapperInput" />
+
+<int:channel id="requestChannel" />
+
+
+
+<int:object-to-json-transformer  input-channel="objectMapperInput" 
+	output-channel="requestChannel" />
+
+<int-jms:outbound-channel-adapter id="tiluchannel"
+	destination-name="someTiluChannelQueue" channel="requestChannel" 
+	extract-payload="false" />
+
+
+
+	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="tcp://0.0.0.0:61616"/>
+	</bean>
+	
+	<!-- <int:channel id="transformerchannel" ><int:queue/></int:channel>
+	<int-jms:message-driven-channel-adapter id="tiluchannelReply"
+	destination-name="someTiluChannelQueue" channel="transformerchannel" 
+
+	extract-payload="false" /> -->
+
+<!-- <int:object-to-json-transformer
+	input-channel="transformerchannel" output-channel="pollingChannelOutput" />	
+ -->
+
+</beans>
+

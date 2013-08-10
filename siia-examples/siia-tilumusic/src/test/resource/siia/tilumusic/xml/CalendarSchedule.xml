@@ -11,7 +11,7 @@
 		<djStream djEventNumber="AlisaStream" facebookpost="www.facebook.com?uid=5555"
 			streamUrl="www.alisafakestreamurl:8080.com" twitterAccount="@alisa" />
 	</list-djstream>
-</clubCalendar>
+	<!-- 
 <cs:clubCalendar xmlns:cs="http://www.example.org/siia/club-schedule">
 	<cs:calendarStream>
 		<djStream djEventNumber="HazardStream" />
@@ -29,3 +29,5 @@
 		<streamURL twitterAccount="@hazard" />
 	</cs:TwitterCalendar>
 </cs:clubCalendar>
+ -->
+</clubCalendar>
