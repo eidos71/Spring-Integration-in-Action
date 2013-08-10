@@ -81,35 +81,40 @@ public class TestClubSchedule {
 				a);
 		examplesplittingClubCommand = new ClubCalendarCommand(new DateTime(day, ISOChronology.getInstanceUTC()), new DateTime(day * 2, ISOChronology.getInstanceUTC()),b);
 	}
-	@Test
+	/*@Test
 	public void test() throws Exception {
 		this.clubRequestsChannel.send(MessageBuilder.withPayload(exampleClubcommand).build(), 1000);
 		//Message<?> asXml = this.clubQuotesChannel.receive(5000);
 		assertNotNull(null);
 		//String result= xmlDocToString((Document) asXml.getPayload());
 		//assertXMLEqual("ClubCalendarCommand marshalling incorrect", clubCalendarMarshalled, result);
-	}
+	}*/
 	@Test
 	public void testSlippiting() throws Exception{
 		this.clubRequestsChannel.send(MessageBuilder.withPayload(examplesplittingClubCommand).build(), 1000);
 		System.out.println("************************ recibido  en facebookClubCalendar " );
-		printChannel( this.facebookClubCalendar);
+		assertEquals(3, printChannel( this.facebookClubCalendar) );
 		System.out.println("************************ recibido  en twitterClubCalendar " );
-		printChannel( this.twitterClubCalendar);
+		assertEquals(3, printChannel( this.twitterClubCalendar) );
+	
 		System.out.println("************************ recibido  en streamClubCalendar " );
-		printChannel( this.streamClubCalendar);
+		assertEquals(3, printChannel( this.streamClubCalendar) );
+	
 		System.out.println("************************ END" );
 		}
 	
 		
-	private void printChannel(PollableChannel pollablechannel) throws Exception{
-		Message<?> asXml  =pollablechannel.receive(5000);
+	private int printChannel(PollableChannel pollablechannel) throws Exception{
 		
-		while (asXml!=null) {
+		Message<?> asXml  =pollablechannel.receive(5000);
+		int i;
+		for ( i=0; asXml!=null; i++){
 			String result = xmlDocToString((Document) asXml.getPayload());
 			System.out.println(">>"+ result);
 			asXml =pollablechannel.receive(5000);
 		}
+		return i;
+		
 		
 	}
 		
