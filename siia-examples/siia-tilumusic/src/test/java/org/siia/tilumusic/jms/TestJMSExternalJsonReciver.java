@@ -20,15 +20,18 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class TestJMSExternalJsonReciver {
 
-	@Resource(name = "transformerchannel")
-	PollableChannel  transformerchannel;
 
+
+	@Resource(name = "pollingChannelOutput")
+	PollableChannel  pollingChannelOutput;
+
+	
 	@Test
 	public void testRecive(){
 		MessagingTemplate template = new MessagingTemplate();
 	
-		
-		Object response = template.receiveAndConvert(transformerchannel);
+		template.setReceiveTimeout(5000);
+		Object response = template.receiveAndConvert(pollingChannelOutput);
 		System.out.println("response---------->"+response);
 	}
 }

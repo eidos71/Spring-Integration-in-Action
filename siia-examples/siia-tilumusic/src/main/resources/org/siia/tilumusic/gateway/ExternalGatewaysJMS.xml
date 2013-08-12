@@ -22,21 +22,10 @@
 	destination-name="someTiluChannelQueue" channel="requestChannel" 
 	extract-payload="false" />
 
-
-
 	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
 		<property name="brokerURL" value="tcp://0.0.0.0:61616"/>
 	</bean>
 	
-	<!-- <int:channel id="transformerchannel" ><int:queue/></int:channel>
-	<int-jms:message-driven-channel-adapter id="tiluchannelReply"
-	destination-name="someTiluChannelQueue" channel="transformerchannel" 
-
-	extract-payload="false" /> -->
-
-<!-- <int:object-to-json-transformer
-	input-channel="transformerchannel" output-channel="pollingChannelOutput" />	
- -->
 
 </beans>
 

@@ -10,31 +10,21 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 	
 
-
-<int:channel id="requestChannel" />
-
-
-
-<int:object-to-json-transformer  input-channel="objectMapperInput" 
-	output-channel="requestChannel" />
-
-
-
-
-
 	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
 		<property name="brokerURL" value="tcp://0.0.0.0:61616"/>
 	</bean>
 	
-	<int:channel id="transformerchannel" ><int:queue/></int:channel>
+	<int:channel id="transformerchannel" ></int:channel>
+	<int:channel id="pollingChannelOutput" ><int:queue/></int:channel>
+	
 	<int-jms:message-driven-channel-adapter id="tiluchannelReply"
 	destination-name="someTiluChannelQueue" channel="transformerchannel" 
-
 	extract-payload="true" /> 
 
-<!-- <int:object-to-json-transformer
-	input-channel="transformerchannel" output-channel="pollingChannelOutput" />	
- -->
-
+<int:json-to-object-transformer
+	input-channel="transformerchannel" output-channel="pollingChannelOutput" 
+	type="org.siia.tilumusic.domain.DJStreamStatus"
+	/>	
+	
 </beans>
 

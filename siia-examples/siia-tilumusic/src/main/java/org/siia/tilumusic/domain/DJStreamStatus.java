@@ -15,6 +15,6 @@ public class DJStreamStatus {
 	public void setLastChecked(String lastChecked) {
 		this.lastChecked = lastChecked;
 	}
-
+	 
 	
 }

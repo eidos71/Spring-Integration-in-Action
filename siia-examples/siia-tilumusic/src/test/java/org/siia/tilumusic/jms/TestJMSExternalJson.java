@@ -23,7 +23,7 @@ public class TestJMSExternalJson {
 	MessageChannel objectMapperInput;
 
 	@Test
-	public void test() {
+	public void testSend() {
 		DJStreamStatus djStreamStatus= new DJStreamStatus();
 		djStreamStatus.setLastChecked("yesterday");
 		djStreamStatus.setStatus("online");
