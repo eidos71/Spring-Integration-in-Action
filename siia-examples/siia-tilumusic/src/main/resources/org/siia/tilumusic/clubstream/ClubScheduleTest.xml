@@ -22,8 +22,20 @@
 		<beans:property name="classesToBeBound"
 			value="org.siia.tilumusic.domain.clubs.ClubCalendarCommand" />
 	</beans:bean>
-	<channel id="javaClubCalendarCommands" />
 
+	<channel id="javaClubCalendarCommands">
+			<interceptors>
+				<wire-tap channel="auditChannel"/>
+			</interceptors>
+	
+	</channel>
+	<channel id="auditChannel" />
+	<filter input-channel="auditChannel"
+			expression="payload.startingCalendarSchedule != null "
+			output-channel="logger"/>
+			
+	<logging-channel-adapter id="logger"
+			expression="'********************>domain ' + payload.toString()"/>
 	<si-xml:marshalling-transformer
 		input-channel="javaClubCalendarCommands" output-channel="xmlClubQuotes"
 		marshaller="clubMarshaller" result-transformer="resultToDocumentTransformer" />
@@ -46,7 +58,7 @@
 		<beans:entry key="cs"
 			value="http://www.example.org/siia/club-schedule" />
 	</util:map>
-	<channel id="splittingClubNodes" />
+
 
 	<si-xml:xpath-router id="clubRequestRouter"
 		input-channel="splittingClubNodes" evaluate-as-string="true">
@@ -59,13 +71,15 @@
 
 
 	<channel id="facebookClubCalendar">
-		<queue />
+			<queue />
 	</channel>
 	<channel id="twitterClubCalendar">
 		<queue />
 	</channel>
 	<channel id="streamClubCalendar">
+	
 		<queue />
 	</channel>
+
 </beans:beans>
 

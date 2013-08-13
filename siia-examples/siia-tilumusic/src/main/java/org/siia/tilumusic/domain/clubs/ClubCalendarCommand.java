@@ -108,9 +108,19 @@ public class ClubCalendarCommand {
 	}
 	@Override
 	public String toString() {
+		StringBuffer streamString=new StringBuffer();
+		if (this.getListDJStream()!=null){
+		
+			streamString.append("[");
+			for (DJStream stream: this.getListDJStream()){
+				streamString.append( stream.getStreamUrl()+",");
+			}
+			streamString.append("}");
+			
+		}
 		return "ClubCalendarCommand [startingCalendarSchedule="
 				+ startingCalendarSchedule + ", endingCalendarSchedule="
-				+ endingCalendarSchedule + "]";
+				+ endingCalendarSchedule +streamString.toString()+ "]";
 	}
 	
 	
