@@ -18,8 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
 
-@ContextConfiguration("classpath:org/siia/tilumusic/channel/routingPayloadExample.xml")
-@RunWith(SpringJUnit4ClassRunner.class)
+
 public class RoutingTest {
 
 

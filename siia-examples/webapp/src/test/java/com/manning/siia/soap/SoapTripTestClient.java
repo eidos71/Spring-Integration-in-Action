@@ -19,6 +19,9 @@ package com.manning.siia.soap;
 import siia.booking.domain.Location;
 import siia.booking.domain.trip.Leg;
 import siia.booking.domain.trip.LegQuoteCommand;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.joda.time.DateTime;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.ws.client.core.WebServiceOperations;
@@ -29,15 +32,18 @@ import org.springframework.ws.client.core.WebServiceOperations;
 public class SoapTripTestClient {
 
     private static final CommandBuilder builder = new CommandBuilder();
-
+    private static Log logger = LogFactory.getLog(SoapTripTestClient.class);
 
     public static void main(String[] args) {
+    
+        
         ClassPathXmlApplicationContext ctx =
                 new ClassPathXmlApplicationContext("soap-client-applicationContext.xml", SoapTripTestClient.class);
         WebServiceOperations webServiceOperations = (WebServiceOperations) ctx.getBean(WebServiceOperations.class);
 
         LegQuoteCommand command = new LegQuoteCommand(builder.buildTestLeg());
         Object result = webServiceOperations.marshalSendAndReceive(command);
+        logger.info("result" + result);
         System.out.println(result);
     }
 
